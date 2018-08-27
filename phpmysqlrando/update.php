@@ -1,4 +1,9 @@
 <?php
+$tf='';
+$f='';
+$m='';
+$d='';
+$td='';
 
 try
 {
@@ -8,7 +13,47 @@ try
 	if (!isset($_POST['button'])) {
 			$id = $_GET['id'];
 		$resultat = $bd->query("SELECT * FROM hiking WHERE id = $id");
+
 		$donnees = $resultat->fetch();
+		switch ($donnees['difficulty']){
+
+			case "très facile" :
+			$tf='selected';
+			$f='';
+			$m='';
+			$d='';
+			$td='';
+			break;
+			case "facile" :
+			$tf='';
+			$f='selected';
+			$m='';
+			$d='';
+			$td='';
+			break;
+			case "moyen" :
+			$tf='';
+			$f='';
+			$m='selected';
+			$d='';
+			$td='';
+			break;
+			case "difficile" :
+				$tf='';
+				$f='';
+				$m='';
+				$d='selected';
+				$td='';
+			break;
+			case "très difficile" :
+				$tf='';
+				$f='';
+				$m='';
+				$d='';
+				$td='selected';
+			break;
+		}
+
 	}else {
 		$id=$_POST['id'];
 		$name=$_POST['name'];
@@ -28,14 +73,15 @@ try
 		);
 
 		$sql = "UPDATE hiking SET name= :nom, difficulty=:difficulte, distance= :distance, duration= :duree, height_difference= :denivele WHERE id =:id";
-		// $nb_modifs = $bd->exec($sql);
-		// echo $nb_modifs . ' entrées ont été modifiées !';
+
 
 
 
 		$req = $bd->prepare($sql);
 		if ($req->execute($tab)){
-		echo 'Le randonnée a bien été modifiées avec succès !';
+			echo 'Le randonnée a bien été modifiées avec succès !';
+
+
 		};
 	}
 
@@ -55,13 +101,13 @@ catch(Exception $e)
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Ajouter une randonnée</title>
+	<title>Modifier une randonnée</title>
 	<link rel="stylesheet" href="css/basics.css" media="screen" title="no title" charset="utf-8">
 </head>
 <body>
 	<a href="./read.php">Liste des données</a>
 <?php if (!isset($_POST['button'])) { ?>
-	<h1>Ajouter</h1>
+	<h1>Modifier</h1>
 	<form action="update.php" method="post">
 		<div>
 			<label for="name">Name</label>
@@ -71,11 +117,11 @@ catch(Exception $e)
 		<div>
 			<label for="difficulty">Difficulté</label>
 			<select name="difficulty">
-				<option value="très facile">Très facile</option>
-				<option value="facile">Facile</option>
-				<option value="moyen">Moyen</option>
-				<option value="difficile">Difficile</option>
-				<option value="très difficile">Très difficile</option>
+				<option value="très facile" <?= $tf;?> >Très facile</option>
+				<option value="facile" <?= $f;?> >Facile</option>
+				<option value="moyen" <?= $m;?> >Moyen</option>
+				<option value="difficile" <?= $d;?> >Difficile</option>
+				<option value="très difficile" <?= $td;?> >Très difficile</option>
 			</select>
 		</div>
 

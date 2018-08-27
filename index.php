@@ -37,13 +37,13 @@ $req->execute($tab);
 $resultat = $bd->query('SELECT * FROM météo');
 // $resultat = $bd->query('INSERT INTO météo (Ville, Haut, Bas) VALUES ($_POST['ville'], $_POST['haut'], $_POST['bas'])');
 
-$donnees = $resultat->fetch();
+// $donnees = $resultat->fetch();
 
 $matable ='';
 while ($donnees = $resultat->fetch())
 {
   $matable = $matable. '<tr>';
-	$matable = $matable. '<td><input class="choix_suppression" value="'.$donnees['id'].'" type="checkbox" name="supprimer[]"/></td>';
+
   $matable = $matable.'<td>' .$donnees['Ville']. '</td>';
   $matable = $matable.'<td>' .$donnees['Haut']. '</td>';
   $matable = $matable.'<td>' .$donnees['Bas']. '</td>';
